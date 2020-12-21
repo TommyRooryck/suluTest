@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')[0] }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block meta %}
+        {% include "@SuluWebsite/Extension/seo.html.twig" with {
+            "seo": extension.seo|default([]),
+            "content": content|default([]),
+            "localizations": localizations|default([]),
+            "shadowBaseLocale": shadowBaseLocale|default(),
+            "defaultLocale": app.request.locale
+        } %}
+    {% endblock %}
+
+    {% block style %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% block header %}
+            <nav>
+                <ul>
+                    <li>
+                        <a href="{{ sulu_content_root_path() }}">Homepage</a>
+                    </li>
+
+                    {% for item in sulu_navigation_root_tree('main') %}
+                        <li>
+                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
+                               title="{{ item.title }}">{{ item.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        {% endblock %}
+    </header>
+
+    <form action="{{ path('sulu_search.website_search') }}" method="GET">
+        <input name="q" type="text" placeholder="Search"/>
+        <input type="submit" value="Go"/>
+    </form>
+
+    <section id="content">
+        {% block content %}{% endblock %}
+    </section>
+
+    <aside>
+        {% block aside %}{% endblock %}
+    </aside>
+
+    <div class="row">
+        <footer class="col-12 d-flex justify-content-around fixed-bottom">
+            {% block footer %}
+                {% set snippet= sulu_snippet_load_default('footer') %}
+                                <p> Copyright {{ 'now'|date('Y') }} {{ snippet[0].content.copyright_author }} </p>
+                                <p> {{ snippet[0].content.phone }} </p>
+                                <p> {{ snippet[0].content.address }} </p>
+
+                        {% dump(snippet) %}
+            {% endblock %}
+        </footer>
+    </div>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</body>
+</html>

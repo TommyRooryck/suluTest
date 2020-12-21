@@ -1,0 +1,12 @@
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+@font-face{
+    font-family: roboto_bold;
+    src: url("../fonts/Roboto-Bold.ttf");
+}
+
+body p{
+    color: darkgrey;
+    font-family: roboto_bold;
+}
+
