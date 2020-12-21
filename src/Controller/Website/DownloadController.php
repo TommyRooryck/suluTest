@@ -13,16 +13,6 @@ class DownloadController extends AbstractController
 {
 
     /**
-     * @Route("/downloads", name="downloads")
-     */
-    public function index(): Response
-    {
-        return $this->render('pages/download.html.twig', [
-    
-        ]);
-    }
-
-    /**
      * @Route("/downloads/excel", name="download")
      */
     public function downloadExcel(){
@@ -31,9 +21,8 @@ class DownloadController extends AbstractController
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle("All Months");
 
-        for($x=0; $x<12; $x++){
+        for($x=1; $x<13; $x++){
             $d = strtotime("+" . $x . " Months");
-            $sheet->setCellValue('A' . $x , date("F", $d));
             $sheet->getCell('A'.$x)->setValue(date("F", $d));
         }
 

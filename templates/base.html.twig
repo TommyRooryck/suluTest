@@ -22,27 +22,30 @@
 <body>
     <header>
         {% block header %}
-            <nav>
-                <ul>
-                    <li>
-                        <a href="{{ sulu_content_root_path() }}">Homepage</a>
-                    </li>
 
-                    {% for item in sulu_navigation_root_tree('main') %}
-                        <li>
-                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
-                               title="{{ item.title }}">{{ item.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{{ sulu_content_root_path() }}">Homepage</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        {% for item in sulu_navigation_root_tree('main') %}
+                            <li class="nav-item active">
+                                 <a class="nav-link" href="{{ sulu_content_path(item.url, item.webspaceKey) }}" title="{{ item.title }}">{{ item.title }} <span class="sr-only">(current)</span></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <form class="form-inline my-2 my-lg-0" action="path('sulu_search_website_search')" method="GET">
+                        <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
             </nav>
         {% endblock %}
     </header>
-
-    <form action="{{ path('sulu_search.website_search') }}" method="GET">
-        <input name="q" type="text" placeholder="Search"/>
-        <input type="submit" value="Go"/>
-    </form>
 
     <section id="content">
         {% block content %}{% endblock %}
@@ -59,8 +62,6 @@
                                 <p> Copyright {{ 'now'|date('Y') }} {{ snippet[0].content.copyright_author }} </p>
                                 <p> {{ snippet[0].content.phone }} </p>
                                 <p> {{ snippet[0].content.address }} </p>
-
-                        {% dump(snippet) %}
             {% endblock %}
         </footer>
     </div>

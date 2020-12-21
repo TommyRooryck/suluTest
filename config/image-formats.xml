@@ -21,4 +21,20 @@
 
     <img src="{{ image.thumbnails['300x'] }}" alt="{{ image.title }}" title="{{ image.description|default(image.title) }}">
     -->
+
+    <format key="x1000">
+        <meta>
+            <title lang="en">Header Image</title>
+        </meta>
+
+        <scale x="1000"/>
+    </format>
+
+    <format key="y400">
+        <meta>
+            <title lang="en">Carousel Images</title>
+        </meta>
+
+        <scale y="400"/>
+    </format>
 </formats>
